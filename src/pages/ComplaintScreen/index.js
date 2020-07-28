@@ -25,9 +25,9 @@ function ComplaintScreen() {
 
     async function takePicture() {
         const result = await ImagemPicker.launchCameraAsync();
-        console.log(JSON.stringify(result.base64));
+        console.log(result.base64);
         if (!result.cancelled) {
-            setPhoto(result.base64);
+            setPhoto(result.uri);
             setVerify(true)
         } else {
             setPhoto('');
@@ -35,22 +35,29 @@ function ComplaintScreen() {
         }
     }
 
-    function handleAdd() {
+    async function handleAdd() {
         const motivo_ocorrencia = selected;
         const email = email_user;
         const imagem = photo;
         const data_de_envio = JSON.stringify(date).substring(0, 11);
 
         if (email !== '' || motivo_ocorrencia !== '' || imagem !== '' || data_de_envio !== '') {
-            Api.post('/' + email, {
-                data_de_envio,
-                motivo_ocorrencia,
-                email,
-                imagem
-            })
-            navigation.reset({
-                routes: [{ name: 'HomeScreen' }]
-            })
+
+            try {
+                const response = await Api.post('/' + email, {
+                    data_de_envio,
+                    motivo_ocorrencia,
+                    email,
+                    imagem
+                })
+                console.log(response)
+
+                navigation.reset({
+                    routes: [{ name: 'HomeScreen' }]
+                })
+            } catch (err) {
+                console.log(err);
+            }
 
         } else {
             Alert.alert('Preencha os dados corretamente!');
