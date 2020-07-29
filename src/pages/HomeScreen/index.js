@@ -8,9 +8,11 @@ import CardList from '../../components/CardList';
 
 function HomeScreen() {
   const navigation = useNavigation();
-  
+
   function handleNewComplaint() {
-    navigation.navigate('ComplaintScreen');
+    navigation.reset({
+      routes: [{ name: 'ComplaintScreen' }]
+    });
   }
   return (
     <Layout style={Styles.container} level='4'>

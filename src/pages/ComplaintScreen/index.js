@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Layout, Input, CheckBox, Card, Modal, Text } from '@ui-kitten/components';
-import { View, TouchableOpacity, Alert, Picker } from 'react-native';
+import { View, TouchableOpacity, Alert, Picker, Image } from 'react-native';
 import { FontAwesome5, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagemPicker from 'expo-image-picker';
@@ -16,12 +16,10 @@ function ComplaintScreen() {
     const [selected, setSelected] = useState('');
     const [visible, setVisible] = useState(false);
     const [list, setList] = useState([
-        { id: 1, nome: 'Monitor sem imagem' },
-        { id: 2, nome: 'Cabo de rede com defeito' },
-        { id: 3, nome: 'Mouse com defeito' },
-        { id: 4, nome: 'Faltando internet' },
+        { id: 1, nome: 'Furto' },
+        { id: 2, nome: 'Roubo' }
     ])
-    const [email_user, setEmail_user] = useState('');
+    const [email_user, setEmail_user] = useState('luis@teste.com');
     const date = new Date();
 
     async function takePicture() {
@@ -37,13 +35,12 @@ function ComplaintScreen() {
 
     async function handleAdd() {
         const motivo_ocorrencia = selected;
-        const email = email_user;
         const imagem = photo;
         const data_de_envio = JSON.stringify(date).substring(0, 11).toString().replace('"', '');
 
-        if (email !== '' || motivo_ocorrencia !== '' || imagem !== '' || data_de_envio !== '') {
+        if (motivo_ocorrencia !== '' || imagem !== '' || data_de_envio !== '') {
             try {
-                await Api.post('ocorrencias/dariobennaia@gmail.com/', {
+                await Api.post(`ocorrencias/${email}/`, {
                     motivo_ocorrencia,
                     email,
                     imagem,
@@ -93,6 +90,7 @@ function ComplaintScreen() {
                     status='primary'
                     placeholder='Email'
                     keyboardType='email-address'
+                    disabled={true}
                     value={email_user}
                     onChangeText={e => setEmail_user(e)}
                 />
