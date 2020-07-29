@@ -77,9 +77,38 @@ export const Styles = StyleSheet.create({
         backgroundColor: '#FFF',
         color: '#970E3E'
     },
-    Picker:{
+    Picker: {
         backgroundColor: '#FFF',
         marginBottom: 10,
         borderRadius: 5
+    },
+    backdrop: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    CardModal: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    ButtonModal: {
+        backgroundColor: '#970E3E',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    TextModal: {
+        textAlign: 'center',
+        marginBottom: 30,
+        fontWeight: 'bold'
+    },
+    TextButtonModal: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        color: '#FFF',
+        padding: 10,
+        fontSize: 15
     }
 });

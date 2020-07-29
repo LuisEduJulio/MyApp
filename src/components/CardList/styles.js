@@ -22,5 +22,10 @@ export const Styles = StyleSheet.create({
     Title:{
         fontSize: 15,
         fontWeight: 'bold'
+    },
+    Image: {
+        marginRight: 10,
+        width: 40,
+        height: 40
     }
 });

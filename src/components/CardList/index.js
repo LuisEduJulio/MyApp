@@ -9,7 +9,7 @@ function CardList() {
     
     useEffect(() => {
         async function requestList() {
-            const response = await Api.get('http://apitesteionic.godocs.com.br/api/ocorrencias/');
+            const response = await Api.get('ocorrencias');
             
             if (response !== null) {
                 setData(response.data.dados);
@@ -25,7 +25,10 @@ function CardList() {
             {data.map((Items) =>
                 <Layout style={Styles.card} level='4'>
                     <View>
-                        <Image source={{ url: Items.imagem }} />
+                        <Image 
+                            source={{ uri: `data:image/jpg;base64,${Items.imagem}` }}
+                            style={Styles.Image}
+                        />
                     </View>
                     <View>
                         <Text style={Styles.Title}>Email: {Items.email}</Text>
