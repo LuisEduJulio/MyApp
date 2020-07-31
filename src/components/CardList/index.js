@@ -1,20 +1,23 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout } from '@ui-kitten/components';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, ActivityIndicator } from 'react-native';
 import { Api } from '../../Services/Api';
 import { Styles } from './styles';
 
 function CardList() {
     const [data, setData] = useState([]);
-    
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         async function requestList() {
-            const response = await Api.get('ocorrencias');
-            
+            setLoading(true);
+            const response = await Api.get('/ocorrencias');
             if (response !== null) {
                 setData(response.data.dados);
+                setLoading(false);
             } else {
                 setData([]);
+                setLoading(false);
             }
         }
         requestList();
@@ -22,10 +25,11 @@ function CardList() {
 
     return (
         <View style={Styles.container}>
+            {loading && <ActivityIndicator size='large' color='#FFF' />}
             {data.map((Items) =>
                 <Layout style={Styles.card} level='4'>
                     <View>
-                        <Image 
+                        <Image
                             source={{ uri: `data:image/jpg;base64,${Items.imagem}` }}
                             style={Styles.Image}
                         />

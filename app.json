@@ -6,9 +6,8 @@
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "splash": {
-      "image": "./src/assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#970E3E"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,6 +20,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "android":{
+      "package":"com.luisedujulio.luisedujulio"
     }
   }
 }

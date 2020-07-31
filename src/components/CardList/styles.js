@@ -17,7 +17,8 @@ export const Styles = StyleSheet.create({
         backgroundColor: '#FFF',
         height: 60,
         width: 380,
-        borderRadius: 5
+        borderRadius: 5,
+        margin: 10
     },
     Title:{
         fontSize: 15,

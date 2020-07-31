@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Layout, Input, CheckBox, Card, Modal, Text } from '@ui-kitten/components';
-import { View, TouchableOpacity, Alert, Picker, Image } from 'react-native';
+import { View, TouchableOpacity, Alert, Picker, ActivityIndicator, Image } from 'react-native';
 import { FontAwesome5, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagemPicker from 'expo-image-picker';
@@ -15,6 +15,7 @@ function ComplaintScreen() {
     const navigation = useNavigation();
     const [selected, setSelected] = useState('');
     const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [list, setList] = useState([
         { id: 1, nome: 'Furto' },
         { id: 2, nome: 'Roubo' }
@@ -29,31 +30,33 @@ function ComplaintScreen() {
             data => {
                 setPhoto(data);
                 setVerify(true);
+                setChecked(true)
             }
         );
     }
 
     async function handleAdd() {
-        const motivo_ocorrencia = selected;
-        const imagem = photo;
-        const data_de_envio = JSON.stringify(date).substring(0, 11).toString().replace('"', '');
+        setLoading(true)
+        const data = JSON.stringify(date).substring(0, 11).toString().replace('"', '');
 
-        if (motivo_ocorrencia !== '' || imagem !== '' || data_de_envio !== '') {
+        if (selected !== '' || photo !== '') {
+            console.log(JSON.parse(foto1));
             try {
-                await Api.post(`ocorrencias/${email}/`, {
-                    motivo_ocorrencia,
-                    email,
-                    imagem,
-                    data_de_envio
-                })
+                await Api.post('/ocorrencias/', {
+                    motivo_ocorrencia: selected,
+                    email: email_user,
+                    imagem: photo,
+                });
+                setLoading(false);
                 setVisible(true);
             } catch (err) {
-                console.log(err);
+                console.log('\n' + err);
                 setVisible(false);
-                Alert.alert('Preencha os dados corretamente!');
+                setLoading(false)
             }
         } else {
             Alert.alert('Preencha os dados corretamente!');
+            setLoading(false)
         }
     }
 
@@ -108,10 +111,12 @@ function ComplaintScreen() {
                         checked={checked}
                         disabled={true}
                         style={Styles.Check}
+                        status='basic'
                     />
                     <Text style={Styles.TextCheckbox}>Foto salva!</Text>
                 </View>
             }
+            {loading && <ActivityIndicator size='large' color='#FFF' />}
             <View style={Styles.containerFooter}>
                 <TouchableOpacity
                     style={Styles.ButtonSend}

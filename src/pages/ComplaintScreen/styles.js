@@ -74,8 +74,7 @@ export const Styles = StyleSheet.create({
         marginLeft: 10
     },
     Check: {
-        backgroundColor: '#FFF',
-        color: '#970E3E'
+        backgroundColor: '#970E3E',
     },
     Picker: {
         backgroundColor: '#FFF',
